@@ -8,6 +8,8 @@ TagManager:
   - MazeGeo
   - Coin
   - SuperCoin
+  - Wall
+  - Ghost
   layers:
   - Default
   - TransparentFX
