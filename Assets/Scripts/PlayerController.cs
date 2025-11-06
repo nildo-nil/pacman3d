@@ -2,10 +2,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreValueText;
+    public GameObject winPanel;
+    public TextMeshProUGUI winScoreValueText;
 
     private CharacterController controller;
     private float movementX;
@@ -18,10 +21,24 @@ public class PlayerController : MonoBehaviour
     public float speed = 0;   
     public float rotationSpeed = 10f;
     private int score = 0;
+
+    private int totalCoins = 0; 
+    private int coinsEaten = 0;
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        scoreText.text = "Score: " + score;
+        scoreValueText.text = score.ToString();
+
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+        GameObject[] superCoins = GameObject.FindGameObjectsWithTag("SuperCoin");
+        totalCoins = coins.Length + superCoins.Length;
+
+        Debug.Log("Tổng số coin: " + totalCoins);
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(false);
+        }
     }
 
     void Update()
@@ -55,14 +72,46 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Coin"))
         {
             score += 1;
-            scoreText.text = "Score: " + score;
+            scoreValueText.text = score.ToString();
             Destroy(collision.gameObject);
+            HandleCoinEaten();
         }
         else if (collision.CompareTag("SuperCoin"))
         {
             score += 5;
-            scoreText.text = "Score: " + score;
+            scoreValueText.text = score.ToString();
             Destroy(collision.gameObject);
+            HandleCoinEaten();
         }
+    }
+    private void HandleCoinEaten()
+    {
+        coinsEaten++;
+        if (coinsEaten >= totalCoins)
+        {
+            ShowWinScreen(); 
+        }
+    }
+
+    private void ShowWinScreen()
+    {
+        if (winPanel != null && winScoreValueText != null)
+        {
+            winPanel.SetActive(true);
+            winScoreValueText.text = score.ToString();
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void LoadNextLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Menu");
     }
 }

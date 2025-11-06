@@ -25,10 +25,10 @@ public class GameStartCountdown : MonoBehaviour
         countdownText.text = "READY!";
         yield return new WaitForSeconds(1f); 
 
-        countdownText.text = "3";
+        countdownText.text = "111";
         yield return new WaitForSeconds(1f); 
 
-        countdownText.text = "2";
+        countdownText.text = "11";
         yield return new WaitForSeconds(1f); 
 
         countdownText.text = "1";
