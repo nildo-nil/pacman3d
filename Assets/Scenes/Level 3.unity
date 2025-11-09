@@ -2585,7 +2585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &227450741
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13539,6 +13539,17 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300080, guid: 3cdeb45db07800c41b246380f61f46f2, type: 3}
+    - target: {fileID: 8878128769798651284, guid: 482e4546ad0203944961c8ecf7d3b390,
+        type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.06666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878128769798651284, guid: 482e4546ad0203944961c8ecf7d3b390,
+        type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 89b6e4cb542e2424aba7f8007d23a51b,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24064,7 +24075,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1078411321}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: LoadMainMenu
         m_Mode: 1
