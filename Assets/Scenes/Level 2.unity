@@ -15420,9 +15420,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValueText: {fileID: 1772117982}
+  inGameScoreUI: {fileID: 0}
   winPanel: {fileID: 849675656}
   winScoreValueText: {fileID: 1385474895}
   gravityValue: -9.81
+  levelToUnlock: 3
   speed: 5
   rotationSpeed: 10
   gameOverPanel: {fileID: 751515709}

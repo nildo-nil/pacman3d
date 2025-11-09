@@ -8,6 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class PlayerController : MonoBehaviour
 {
     public TextMeshProUGUI scoreValueText;
+    public GameObject inGameScoreUI;
     public GameObject winPanel;
     public TextMeshProUGUI winScoreValueText;
 
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool isGrounded;
     public float gravityValue = -9.81f;
+
+    public int levelToUnlock;
 
     public float speed = 0;
     public float rotationSpeed = 10f;
@@ -114,6 +117,17 @@ public class PlayerController : MonoBehaviour
         {
             winPanel.SetActive(true);
             winScoreValueText.text = score.ToString();
+            if (inGameScoreUI != null)
+            {
+                inGameScoreUI.SetActive(false);
+            }
+            int currentLevelReached = PlayerPrefs.GetInt("LevelReached", 1);
+            if (levelToUnlock > currentLevelReached)
+            {
+                PlayerPrefs.SetInt("LevelReached", levelToUnlock);
+                PlayerPrefs.Save(); 
+                Debug.Log("Đã mở khóa Level " + levelToUnlock);
+            }
             Time.timeScale = 0f;
         }
     }
