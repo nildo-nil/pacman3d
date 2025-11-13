@@ -6728,9 +6728,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1078411323}
   ghostType: 0
+  currentState: 0
   updateRate: 0.5
   flankDistance: 3.5
   predictTime: 1.5
+  respawnDelay: 2.5
+  chaseSpeed: 4
+  frightenedSpeed: 2
+  eatenSpeed: 8
 --- !u!135 &551633967
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9032,9 +9037,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1078411323}
   ghostType: 2
+  currentState: 0
   updateRate: 0.5
   flankDistance: 3.5
   predictTime: 1.5
+  respawnDelay: 2.5
+  chaseSpeed: 4
+  frightenedSpeed: 2
+  eatenSpeed: 8
 --- !u!195 &793593903
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14917,6 +14927,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1078411321}
+    - targetCorrespondingSourceObject: {fileID: 7308235905141624706, guid: d33249e5ae722fb40ad2807c439696d9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1078411324}
   m_SourcePrefab: {fileID: 100100000, guid: d33249e5ae722fb40ad2807c439696d9, type: 3}
 --- !u!1 &1078411320 stripped
 GameObject:
@@ -14946,6 +14960,13 @@ MonoBehaviour:
   rotationSpeed: 10
   gameOverPanel: {fileID: 982096918}
   pausePanel: {fileID: 1983169289}
+  audioSource: {fileID: 1078411324}
+  coinEatClip: {fileID: 8300000, guid: 2e6d36960e555ac4cb14c82ff9579456, type: 3}
+  superCoinEatClip: {fileID: 8300000, guid: 8abd225d042442a46b5a621033a7eee4, type: 3}
+  ghostHitClip: {fileID: 8300000, guid: f16e8b759e0cbf64ca5637a4bcd0dfeb, type: 3}
+  ghostEatenClip: {fileID: 8300000, guid: 3a27efeab14cbfd4ebd70d0f3c372637, type: 3}
+  ghost: {fileID: 0}
+  freezeTimeOnEat: 0.5
 --- !u!114 &1078411322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14983,6 +15004,103 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1078411319}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1078411324
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078411320}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1084249221
 GameObject:
   m_ObjectHideFlags: 0
@@ -20573,9 +20691,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1078411323}
   ghostType: 3
+  currentState: 0
   updateRate: 0.3
   flankDistance: 3.5
   predictTime: 1.5
+  respawnDelay: 2.5
+  chaseSpeed: 4
+  frightenedSpeed: 2
+  eatenSpeed: 8
 --- !u!195 &1502602359
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21922,9 +22045,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1078411323}
   ghostType: 1
+  currentState: 0
   updateRate: 0.5
   flankDistance: 3.5
   predictTime: 1.5
+  respawnDelay: 2.5
+  chaseSpeed: 4
+  frightenedSpeed: 2
+  eatenSpeed: 8
 --- !u!135 &1598528133
 SphereCollider:
   m_ObjectHideFlags: 0

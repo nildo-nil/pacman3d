@@ -1,9 +1,11 @@
 ﻿using DG.Tweening.Core.Easing;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using static Ghost;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +35,15 @@ public class PlayerController : MonoBehaviour
 
     public GameObject pausePanel;
     private bool isPaused = false;
+
+    public AudioSource audioSource;
+    public AudioClip coinEatClip;
+    public AudioClip superCoinEatClip;
+    public AudioClip ghostHitClip;
+    public AudioClip ghostEatenClip;
+
+    public Ghost ghost;
+    public float freezeTimeOnEat = 0.5f;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -48,6 +59,7 @@ public class PlayerController : MonoBehaviour
         {
             winPanel.SetActive(false);
         }
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -88,19 +100,64 @@ public class PlayerController : MonoBehaviour
             score += 1;
             scoreValueText.text = score.ToString();
             Destroy(collision.gameObject);
-            HandleCoinEaten();
+            if (audioSource != null && coinEatClip != null)
+            {
+                audioSource.PlayOneShot(coinEatClip);
+            }
+        HandleCoinEaten();
         }
+
         else if (collision.CompareTag("SuperCoin"))
         {
             score += 5;
             scoreValueText.text = score.ToString();
             Destroy(collision.gameObject);
+            if (audioSource != null && superCoinEatClip != null)
+            {
+                audioSource.PlayOneShot(superCoinEatClip);
+            }
+            Ghost redGhost = FindObjectOfType<Ghost>();
+            if (redGhost != null)
+            {
+                redGhost.SetAllFrightened(5f);
+            }
             HandleCoinEaten();
         }
         else if (collision.CompareTag("Ghost"))
         {
-            ShowGameOverScreen();
+            Ghost ghost = collision.GetComponent<Ghost>();
+
+            if (ghost != null)
+            {
+
+                if (ghost.currentState == GhostState.Frightened)
+                {
+                    if (audioSource != null && ghostEatenClip != null)
+                    {
+                        audioSource.PlayOneShot(ghostEatenClip);
+                    }
+                    // Gọi Coroutine xử lý ăn Ghost
+                    StartCoroutine(GhostEatenSequence(ghost));
+                
+                }
+                else if (ghost.currentState != GhostState.Eaten && ghost.currentState != GhostState.LeavingHome && audioSource != null && ghostHitClip != null)
+                {
+                    audioSource.PlayOneShot(ghostHitClip);
+                    ShowGameOverScreen();
+                }
+            }
         }
+    }
+    IEnumerator GhostEatenSequence(Ghost eatenGhost)
+    {
+        Time.timeScale = 0f;
+        this.enabled = false;
+        score += 50;
+        scoreValueText.text = score.ToString();
+        eatenGhost.SetState(GhostState.Eaten);
+        yield return new WaitForSecondsRealtime(freezeTimeOnEat);
+        Time.timeScale = 1f;
+        this.enabled = true;
     }
     private void HandleCoinEaten()
     {

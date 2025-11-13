@@ -51,6 +51,11 @@ public class GameStartCountdown : MonoBehaviour
 
         countdownText.gameObject.SetActive(false);
         dimmerPanel.gameObject.SetActive(false);
+
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
     }
 
     void DisableAllGhosts()
@@ -77,7 +82,7 @@ public class GameStartCountdown : MonoBehaviour
             if (ghost != null)
             {
                 ghost.enabled = true; // Bật script → Bắt đầu AI!
-                Debug.Log($"Ghost {ghost.name} ({ghost.ghostType}) START CHASING!");
+                ghost.StartChasing();
             }
         }
     }
