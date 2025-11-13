@@ -1,17 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
-    public GameObject clearPanel;
-    public GameObject buttonLayout;
+    public GameObject clearPanel; // Bảng thông báo xác nhận (Yes/No)
+    public GameObject buttonLayout; // Nhóm các nút chính (Start, Options, Quit...)
     public void StartGame()
     {
         SceneManager.LoadScene("Select Level");
-    }
-    public void OpenOptions()
-    {
-        Debug.Log("Opening options...");
     }
     public void ClearData()
     {
@@ -25,7 +21,9 @@ public class MainMenuManager : MonoBehaviour
     public void HandleYesClear()
     {
         Debug.Log("Accepted clearing data");
+        // Xoá tất cả dữ liệu đã lưu
         PlayerPrefs.DeleteAll();
+        // Trả lại trạng thái UI ban đầu (Ẩn bảng hỏi, hiện lại menu)
         if (clearPanel != null)
         {
             clearPanel.SetActive(false);
